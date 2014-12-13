@@ -1,7 +1,50 @@
-<html>
-<head>
-</head>
-<body>
-Hello World
-</body>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>AmigoCloud</title>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
+  </head>
+<style>
+  #map {
+  width: 100%;
+  height: 1000px;
+  }
+</style>
+
+  <body>
+    <div class="leaflet">
+      <div id="map">
+      </div>
+    </div>
+
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
+  </body>
+  <script>
+    $(document).ready(function () {
+        var map, gray, amigoLayer, control, controlMaps;
+
+        gray = L.tileLayer('https://www.amigocloud.com/api/v1/base_layers/392/tiles/{z}/{x}/{y}.png', {});
+        amigoLayer = L.tileLayer('https://beta.amigocloud.com/api/v1/users/1/projects/3449/datasets/13861/tiles/{z}/{x}/{y}.png', {});
+
+        controlMaps = {
+            baseMaps: {
+                "AmigoGray": gray,
+            },
+            overlayMaps: {
+                "AmigoCloud": amigoLayer
+            }
+        };
+
+        map = L.map('map', {
+            layers: [gray, amigoLayer]
+        }).setView([37.7778, -122.4292], 12);
+
+        control = L.control.layers(
+            controlMaps.baseMaps, controlMaps.overlayMaps
+        ).addTo(map);
+
+    });
+  </script>
 </html>

@@ -2,44 +2,50 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>AmigoCloud</title>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.css" />
-  </head>
-<style>
-  #map {
-  width: 100%;
-  height: 800px;
-  }
-</style>
-
-  <body>
-    <div class="leaflet">
-      <div id="map">
-      </div>
-    </div>
-
+    <title>AmigoCloud Team</title>
+    <link rel="stylesheet" href="http://leafletjs.com/dist/leaflet.css" />
+    <script src="http://leafletjs.com/dist/leaflet.js"></script>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script src="http://cdn.leafletjs.com/leaflet-0.7.2/leaflet.js"></script>
-  </body>
-  <script>
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <style>
+
+          body {
+            padding: 0;
+            margin: 0;
+          }
+          html, body, #map {
+            height: 100%;
+          }
+    </style>
+
+    <script>
     $(document).ready(function () {
         var map, gray, amigoLayer, control, controlMaps;
 
         gray = L.tileLayer('https://www.amigocloud.com/api/v1/base_layers/392/tiles/{z}/{x}/{y}.png', {});
-        amigoLayer = L.tileLayer('https://www.amigocloud.com/api/v1/users/1/projects/1665/datasets/12567/tiles/{z}/{x}/{y}.png', {});
+
+        poi = L.tileLayer('https://www.amigocloud.com/api/v1/users/1/projects/1672/datasets/12617/tiles/{z}/{x}/{y}.png', {});
+
+        paths = L.tileLayer('https://www.amigocloud.com/api/v1/users/1/projects/1672/datasets/12618/tiles/{z}/{x}/{y}.png', {});
+
+        areas_of_interest = L.tileLayer('https://www.amigocloud.com/api/v1/users/1/projects/1672/datasets/12619/tiles/{z}/{x}/{y}.png', {});
 
         controlMaps = {
             baseMaps: {
                 "AmigoGray": gray,
             },
             overlayMaps: {
-                "AmigoCloud": amigoLayer
+                "Points of Interest" : poi,
+                "Paths" : paths,
+                "Areas of Interest" : areas_of_interest
             }
         };
 
         map = L.map('map', {
-            layers: [gray, amigoLayer]
-        }).setView([37.7778, -122.4292], 12);
+            layers: [gray, poi, paths, areas_of_interest]
+        }).setView([37.7778, -122.4292], 3);
 
         control = L.control.layers(
             controlMaps.baseMaps, controlMaps.overlayMaps
@@ -47,4 +53,10 @@
 
     });
   </script>
+
+  </head>
+
+  <body>
+    <div id="map"></div>
+  </body>
 </html>
